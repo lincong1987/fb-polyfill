@@ -7,9 +7,14 @@
 
   if (!global) { return; }
 
+  if (!("Window" in global) || !("HTMLDocument" in global) || !("Element" in global)) {
+    return
+  }
+
   if (('Event' in global) && typeof global.Event === 'function') {
     return
   }
+
   var unlistenableWindowEvents = {
     click: 1,
     dblclick: 1,
