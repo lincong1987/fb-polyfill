@@ -15,7 +15,7 @@
   if ('getComputedStyle' in global && typeof global.getComputedStyle === 'function') {
     return
   }
-  function getPixelSize (element, style, property, fontSize) {
+  function getPixelSize(element, style, property, fontSize) {
     var sizeWithSuffix = style[property]
     var size = parseFloat(sizeWithSuffix)
     var suffix = sizeWithSuffix.split(/\d/)[0]
@@ -25,13 +25,13 @@
         getPixelSize(element.parentElement, element.parentElement.currentStyle, 'fontSize', null) : 16
     rootSize = property === 'fontSize' ? fontSize :
       /width/i.test(property) ? element.clientWidth : element.clientHeight
-    return (suffix ==='em') ? size * fontSize :
+    return (suffix === 'em') ? size * fontSize :
       (suffix === 'in') ? size * 96 :
         (suffix === 'pt') ? size * 96 / 72 :
           (suffix === '%') ? size / 100 * rootSize : size
   }
 
-  function setShortStyleProperty (style, property) {
+  function setShortStyleProperty(style, property) {
     var borderSuffix = property === 'border' ? 'Width' : ''
     var t = property + 'Top' + borderSuffix
     var r = property + 'Right' + borderSuffix
@@ -39,11 +39,11 @@
     var l = property + 'Left' + borderSuffix
     style[property] = (style[t] == style[r] == style[b] == style[l] ? [style[t]]
       : style[t] == style[b] && style[l] == style[r] ? [style[t], style[r]]
-      : style[l] == style[r] ? [style[t], style[r], style[b]]
-      : [style[t], style[r], style[b], style[l]]).join(' ')
+        : style[l] == style[r] ? [style[t], style[r], style[b]]
+          : [style[t], style[r], style[b], style[l]]).join(' ')
   }
 
-  function CSSStyleDeclaration (element) {
+  function CSSStyleDeclaration(element) {
     var currentStyle = element.currentStyle || {}
     var style = this
     var fontSize = getPixelSize(element, currentStyle, 'fontSize', null)
@@ -77,4 +77,6 @@
   global.getComputedStyle = function (node) {
     return new CSSStyleDeclaration(node)
   }
-})(window || null)
+})((typeof self === 'object' && self.self === self && self) ||
+  (typeof global === 'object' && global.global === global && global) ||
+  this)

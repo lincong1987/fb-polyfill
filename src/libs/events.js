@@ -28,7 +28,7 @@
     textinput: 1
   }
   var existingProto = (global.Event && global.Event.prototype) || null
-  global.Event = Window.prototype.Event = function Event (type, eventInitDict) {
+  global.Event = Window.prototype.Event = function Event(type, eventInitDict) {
     if (!type) {
       throw new Error('Not enough arguments')
     }
@@ -70,15 +70,15 @@
           var index = -1
           var length = events.length
           var eventElement
-          event.preventDefault = function preventDefault () {
+          event.preventDefault = function preventDefault() {
             if (event.cancelable !== false) {
               event.returnValue = false
             }
           }
-          event.stopPropagation = function stopPropagation () {
+          event.stopPropagation = function stopPropagation() {
             event.cancelBubble = true
           }
-          event.stopImmediatePropagation = function stopImmediatePropagation () {
+          event.stopImmediatePropagation = function stopImmediatePropagation() {
             event.cancelBubble = true
             event.cancelImmediate = true
           }
@@ -137,7 +137,7 @@
           event.cancelBubble = true
           var cancelBubbleEvent = function (event) {
             event.cancelBubble = true
-            ;(element || window).detachEvent('on' + type, cancelBubbleEvent)
+              ; (element || window).detachEvent('on' + type, cancelBubbleEvent)
           }
           this.attachEvent('on' + type, cancelBubbleEvent)
         }
@@ -165,7 +165,7 @@
     })
 
     // 添加DOMContentLoaded事件
-    document.attachEvent('onreadystatechange', function() {
+    document.attachEvent('onreadystatechange', function () {
       if (document.readyState === 'complete') {
         document.dispatchEvent(new Event('DOMContentLoaded', {
           bubbles: true
@@ -173,4 +173,6 @@
       }
     })
   }
-})(window || null);
+})((typeof self === 'object' && self.self === self && self) ||
+  (typeof global === 'object' && global.global === global && global) ||
+  this);
